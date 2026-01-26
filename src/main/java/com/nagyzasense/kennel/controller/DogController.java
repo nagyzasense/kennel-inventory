@@ -15,9 +15,12 @@ import com.nagyzasense.kennel.model.Gender;
 public class DogController {
 
     @GetMapping("dog/{id}")
-    public ResponseEntity<String> getDog(@PathVariable(name = "id") Long id) {
-        return new ResponseEntity<>(
-                "The controller works, the path variable is: " + id + ".",
-                HttpStatus.OK);
+    public ResponseEntity<Dog> getDog(@PathVariable(name = "id") Long id) {
+        Dog dog = new Dog();
+        dog.setId(id);
+        dog.setName("Morzsi");
+        dog.setBreed("tacskó keverék");
+        dog.setGender(Gender.MALE);
+        return new ResponseEntity<>(dog, HttpStatus.OK);
     }
 }

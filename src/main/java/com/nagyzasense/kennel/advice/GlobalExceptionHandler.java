@@ -30,7 +30,7 @@ public class GlobalExceptionHandler {
 
         ValidationErrorResponse response = new ValidationErrorResponse(
                 LocalDateTime.now(),
-                400,
+                HttpStatus.BAD_REQUEST.value(),
                 VALIDATION_FAILED,
                 errors
         );
@@ -42,7 +42,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<DogNotFoundErrorResponse> handleDogNotFoundExceptions(DogNotFoundException e) {
         DogNotFoundErrorResponse response = new DogNotFoundErrorResponse(
                 LocalDateTime.now(),
-                404,
+                HttpStatus.NOT_FOUND.value(),
                 e.getMessage()
         );
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.nagyzasense.kennel.dto.DogRequestDTO;
 import com.nagyzasense.kennel.dto.DogResponseDTO;
+import com.nagyzasense.kennel.exception.DogNotFoundException;
 import com.nagyzasense.kennel.service.DogService;
 
 import jakarta.validation.Valid;
@@ -36,10 +37,10 @@ public class DogController {
     }
 
     @GetMapping(path = "dog/{id}", produces = "application/json")
-    public ResponseEntity<DogResponseDTO> getDog(@PathVariable(name = "id") Long id) {
+    public ResponseEntity<DogResponseDTO> getDog(@PathVariable(name = "id") Long id) throws DogNotFoundException {
         DogResponseDTO dog = dogService.getDogById(id);
         if (ObjectUtils.isEmpty(dog)) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            throw new DogNotFoundException("The dog not found!");
         }
         return new ResponseEntity<>(dog, HttpStatus.OK);
     }

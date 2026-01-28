@@ -116,4 +116,14 @@ class DogServiceTest {
         assertNotNull(result);
         assertEquals("relativePathPrefix1", result);
     }
+
+    @Test
+    void verifyDeleteDog() {
+        when(dogRepositoryMock.findById(1L)).thenReturn(Optional.of(dog));
+
+        underTest.deleteDog(1L);
+
+        verify(dogRepositoryMock).findById(1L);
+        verify(dogRepositoryMock).delete(dog);
+    }
 }

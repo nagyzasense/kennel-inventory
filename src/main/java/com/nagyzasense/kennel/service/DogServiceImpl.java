@@ -2,7 +2,7 @@ package com.nagyzasense.kennel.service;
 
 
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,5 +57,10 @@ public class DogServiceImpl implements DogService {
     public String saveDog(DogRequestDTO dogDTO) {
         Dog saved = dogRepository.save(dogModelMapper.dogRequestDTOtoDog(dogDTO));
         return relativePathPrefix + saved.getId();
+    }
+
+    @Override
+    public void deleteDog(Long id) {
+        dogRepository.findById(id).ifPresent(dogRepository::delete);
     }
 }

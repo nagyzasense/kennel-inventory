@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -59,5 +60,11 @@ public class DogController {
     @PostMapping(path = "dog", consumes = "application/json", produces = "application/json")
     public ResponseEntity<String> addDog(@RequestBody @Valid DogRequestDTO dog) {
         return new ResponseEntity<>(dogService.saveDog(dog), HttpStatus.OK);
+    }
+
+    @DeleteMapping(path = "dog/{id}", produces = "application/json")
+    public ResponseEntity<Void> deleteDog(@PathVariable(name = "id") Long id) {
+        dogService.deleteDog(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

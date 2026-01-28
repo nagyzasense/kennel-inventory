@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.nagyzasense.kennel.dto.DogRequestDTO;
@@ -15,10 +16,12 @@ import com.nagyzasense.kennel.model.Dog;
 import com.nagyzasense.kennel.repository.DogRepository;
 import com.nagyzasense.kennel.util.DogModelMapper;
 
+
 @Service
 public class DogServiceImpl implements DogService {
 
-    private static final String RELATIVE_PATH_PREFIX = "/api/dog/";
+    @Value("${application.relative.path}")
+    private String relativePathPrefix;
     private final DogRepository dogRepository;
     private final DogModelMapper dogModelMapper;
 
@@ -33,8 +36,7 @@ public class DogServiceImpl implements DogService {
 
     @Override
     public DogResponseDTO getDogById(Long id) {
-        Dog dog = dogRepository.findById(id).orElse(null);
-        return dogModelMapper.dogToDogResponseDTO(dog);
+        return dogModelMapper.dogToDogResponseDTO(dogRepository.findById(id).orElse(null));
     }
 
     @Override
@@ -54,6 +56,6 @@ public class DogServiceImpl implements DogService {
     @Override
     public String saveDog(DogRequestDTO dogDTO) {
         Dog saved = dogRepository.save(dogModelMapper.dogRequestDTOtoDog(dogDTO));
-        return RELATIVE_PATH_PREFIX + saved.getId();
+        return relativePathPrefix + saved.getId();
     }
 }

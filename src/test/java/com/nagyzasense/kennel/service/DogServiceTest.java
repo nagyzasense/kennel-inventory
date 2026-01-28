@@ -6,9 +6,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import com.nagyzasense.kennel.dto.DogResponseDTO;
 import com.nagyzasense.kennel.model.Dog;
 import com.nagyzasense.kennel.model.Gender;
 import com.nagyzasense.kennel.repository.DogRepository;
+import com.nagyzasense.kennel.util.DogModelMapper;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -18,29 +20,33 @@ class DogServiceTest {
 
     private DogRepository dogRepositoryMock;
 
+    private DogModelMapper dogModelMapper;
+
+    private Dog dog;
+
     @BeforeEach
     void setUp() {
         dogRepositoryMock = Mockito.mock(DogRepository.class);
-        underTest = new DogServiceImpl(dogRepositoryMock);
+        dogModelMapper = DogModelMapper.INSTANCE;
+        underTest = new DogServiceImpl(dogRepositoryMock, dogModelMapper);
+        dog = new Dog();
+        dog.setId(1L);
+        dog.setName("Morzsi");
+        dog.setBreed("dachshund");
+        dog.setGender(Gender.FEMALE);
     }
 
     @Test
     void getDogById() {
 
-        Dog dog = new Dog();
-        dog.setId(1L);
-        dog.setName("Morzsi");
-        dog.setBreed("dachshund");
-        dog.setGender(Gender.FEMALE);
-
         Mockito.when(dogRepositoryMock.findById(1L)).thenReturn(Optional.of(dog));
 
-        Dog dog2 = new Dog();
-        dog2.setId(1L);
+        DogResponseDTO dog2 = new DogResponseDTO();
         dog2.setName("Morzsi");
         dog2.setBreed("dachshund");
         dog2.setGender(Gender.FEMALE);
 
-        assertEquals(dog2, underTest.getDogById(1L));
+        DogResponseDTO result = underTest.getDogById(1L);
+        assertEquals(dog2, result);
     }
 }

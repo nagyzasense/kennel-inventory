@@ -1,8 +1,18 @@
 package com.nagyzasense.kennel.service;
 
+import java.util.List;
+
+import com.nagyzasense.kennel.dto.DogRequestDTO;
+import com.nagyzasense.kennel.dto.DogResponseDTO;
 import com.nagyzasense.kennel.model.Dog;
 
 public interface DogService {
 
-    Dog getDogById(Long id);
+    DogResponseDTO getDogById(Long id);
+
+    List<DogResponseDTO> searchDogsByBreed(String breed);
+
+    List<DogResponseDTO> findAll();
+
+    String saveDog(DogRequestDTO dogDTO);
 }

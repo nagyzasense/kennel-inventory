@@ -46,7 +46,7 @@ public class DogController {
         return new ResponseEntity<>(dog, HttpStatus.OK);
     }
 
-    @GetMapping(path = "dog/search", produces = "application/json")
+    @GetMapping(path = "dogs/search", produces = "application/json")
     public ResponseEntity<List<DogResponseDTO>> searchDogsByBreed(@RequestParam(name = "breed") String breed) {
         LOGGER.info("Breed: " + breed);
         return new ResponseEntity<>(dogService.searchDogsByBreed(breed), HttpStatus.OK);

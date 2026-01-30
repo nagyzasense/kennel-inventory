@@ -17,11 +17,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.nagyzasense.kennel.advice.DogErrorResponse;
+import com.nagyzasense.kennel.advice.ValidationErrorResponse;
 import com.nagyzasense.kennel.dto.DogRequestDTO;
 import com.nagyzasense.kennel.dto.DogResponseDTO;
+import com.nagyzasense.kennel.dto.DogSuccessfullySavedDTO;
 import com.nagyzasense.kennel.exception.DogNotFoundException;
 import com.nagyzasense.kennel.service.DogService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
@@ -58,11 +67,11 @@ public class DogController {
     }
 
     @PostMapping(path = "dog", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<String> addDog(@RequestBody @Valid DogRequestDTO dog) {
+    public ResponseEntity<DogSuccessfullySavedDTO> addDog(@RequestBody @Valid DogRequestDTO dog) {
         return new ResponseEntity<>(dogService.saveDog(dog), HttpStatus.OK);
     }
 
-    @DeleteMapping(path = "dog/{id}", produces = "application/json")
+    @DeleteMapping(path = "dog/{id}")
     public ResponseEntity<Void> deleteDog(@PathVariable(name = "id") Long id) {
         dogService.deleteDog(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

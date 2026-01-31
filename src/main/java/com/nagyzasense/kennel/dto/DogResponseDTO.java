@@ -16,4 +16,5 @@ public class DogResponseDTO {
     private String breed;
     private Gender gender;
     private String image;
+    private String relativeReference;
 }

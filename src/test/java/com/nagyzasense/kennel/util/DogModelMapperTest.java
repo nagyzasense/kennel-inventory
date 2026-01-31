@@ -43,6 +43,7 @@ class DogModelMapperTest {
         expected.setName("Morzsi");
         expected.setBreed("dachshund");
         expected.setGender(Gender.FEMALE);
+        expected.setRelativeReference("/api/dog/1");
 
         assertNotNull(result);
         assertEquals(expected, result);

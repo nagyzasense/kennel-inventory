@@ -49,7 +49,7 @@ class DogServiceTest {
         dog.setBreed("dachshund");
         dog.setGender(Gender.FEMALE);
 
-        dogResponseDTO = new DogResponseDTO("Morzsi", "dachshund", Gender.FEMALE, null);
+        dogResponseDTO = new DogResponseDTO("Morzsi", "dachshund", Gender.FEMALE, null, null);
         dogRequestDTO = new DogRequestDTO("Morzsi", "dachshund", "FEMALE", null);
 
         ReflectionTestUtils.setField(underTest, "relativePathPrefix", "relativePathPrefix");

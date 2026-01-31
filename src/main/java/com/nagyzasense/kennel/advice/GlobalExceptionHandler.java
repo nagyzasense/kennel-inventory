@@ -2,6 +2,7 @@ package com.nagyzasense.kennel.advice;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import com.nagyzasense.kennel.exception.DogNotFoundException;
 public class GlobalExceptionHandler {
 
     private static final String VALIDATION_FAILED = "Validation Failed";
+    private static final String THE_BREED_REQUEST_PARAMETER_IS_MANDATORY = "The 'breed' request parameter is mandatory";
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ValidationErrorResponse> handleValidationExceptions(MethodArgumentNotValidException ex) {
@@ -39,12 +41,22 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(DogNotFoundException.class)
-    public ResponseEntity<DogNotFoundErrorResponse> handleDogNotFoundExceptions(DogNotFoundException e) {
-        DogNotFoundErrorResponse response = new DogNotFoundErrorResponse(
+    public ResponseEntity<DogErrorResponse> handleDogNotFoundExceptions(DogNotFoundException e) {
+        DogErrorResponse response = new DogErrorResponse(
                 LocalDateTime.now(),
                 HttpStatus.NOT_FOUND.value(),
                 e.getMessage()
         );
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    public ResponseEntity<DogErrorResponse> handleMissingServletRequestParameterException(MissingServletRequestParameterException e) {
+        DogErrorResponse response = new DogErrorResponse(
+                LocalDateTime.now(),
+                HttpStatus.BAD_REQUEST.value(),
+                THE_BREED_REQUEST_PARAMETER_IS_MANDATORY
+        );
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 }

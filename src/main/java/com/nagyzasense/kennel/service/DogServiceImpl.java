@@ -9,9 +9,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.nagyzasense.kennel.dto.DogRequestDTO;
 import com.nagyzasense.kennel.dto.DogResponseDTO;
+import com.nagyzasense.kennel.dto.DogSuccessfullySavedDTO;
 import com.nagyzasense.kennel.model.Dog;
 import com.nagyzasense.kennel.repository.DogRepository;
 import com.nagyzasense.kennel.util.DogModelMapper;
@@ -54,9 +56,9 @@ public class DogServiceImpl implements DogService {
     }
 
     @Override
-    public String saveDog(DogRequestDTO dogDTO) {
+    public DogSuccessfullySavedDTO saveDog(DogRequestDTO dogDTO) {
         Dog saved = dogRepository.save(dogModelMapper.dogRequestDTOtoDog(dogDTO));
-        return relativePathPrefix + saved.getId();
+        return new DogSuccessfullySavedDTO(relativePathPrefix + saved.getId());
     }
 
     @Override

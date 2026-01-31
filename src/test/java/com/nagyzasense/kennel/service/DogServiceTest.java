@@ -13,6 +13,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 
 import com.nagyzasense.kennel.dto.DogRequestDTO;
 import com.nagyzasense.kennel.dto.DogResponseDTO;
+import com.nagyzasense.kennel.dto.DogSuccessfullySavedDTO;
 import com.nagyzasense.kennel.model.Dog;
 import com.nagyzasense.kennel.model.Gender;
 import com.nagyzasense.kennel.repository.DogRepository;
@@ -109,12 +110,12 @@ class DogServiceTest {
         when(dogRepositoryMock.save(dog)).thenReturn(dog);
         when(dogModelMapper.dogRequestDTOtoDog(dogRequestDTO)).thenReturn(dog);
 
-        String result = underTest.saveDog(dogRequestDTO);
+        DogSuccessfullySavedDTO result = underTest.saveDog(dogRequestDTO);
 
         verify(dogRepositoryMock).save(dog);
         verify(dogModelMapper).dogRequestDTOtoDog(dogRequestDTO);
         assertNotNull(result);
-        assertEquals("relativePathPrefix1", result);
+        assertEquals("relativePathPrefix1", result.getPathToDog());
     }
 
     @Test

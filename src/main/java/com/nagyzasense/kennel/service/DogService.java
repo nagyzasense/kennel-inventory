@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.nagyzasense.kennel.dto.DogRequestDTO;
 import com.nagyzasense.kennel.dto.DogResponseDTO;
+import com.nagyzasense.kennel.dto.DogSuccessfullySavedDTO;
 
 public interface DogService {
 
@@ -13,7 +14,7 @@ public interface DogService {
 
     List<DogResponseDTO> findAll();
 
-    String saveDog(DogRequestDTO dogDTO);
+    DogSuccessfullySavedDTO saveDog(DogRequestDTO dogDTO);
 
     void deleteDog(Long id);
 }

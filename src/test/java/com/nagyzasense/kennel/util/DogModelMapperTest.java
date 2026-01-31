@@ -39,11 +39,11 @@ class DogModelMapperTest {
 
         DogResponseDTO result = dogModelMapper.dogToDogResponseDTO(input);
 
-        DogResponseDTO expected = new DogResponseDTO();
-        expected.setName("Morzsi");
-        expected.setBreed("dachshund");
-        expected.setGender(Gender.FEMALE);
-        expected.setRelativeReference("/api/dog/1");
+        DogResponseDTO expected = DogResponseDTO.builder()
+                .name("Morzsi")
+                .breed("dachshund")
+                .gender(Gender.FEMALE)
+                .relativeReference("/api/dog/1").build();
 
         assertNotNull(result);
         assertEquals(expected, result);
@@ -51,10 +51,10 @@ class DogModelMapperTest {
 
     @Test
     void testDogRequestDTOToDog() {
-        DogRequestDTO input = new DogRequestDTO();
-        input.setName("Morzsi");
-        input.setBreed("dachshund");
-        input.setGender("FEMALE");
+        DogRequestDTO input = DogRequestDTO.builder()
+                .name("Morzsi")
+                .breed("dachshund")
+                .gender("FEMALE").build();
 
         Dog result = dogModelMapper.dogRequestDTOtoDog(input);
 

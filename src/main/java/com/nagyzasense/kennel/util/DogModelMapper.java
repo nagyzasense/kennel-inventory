@@ -19,6 +19,7 @@ public interface DogModelMapper {
     @Mapping(target = "id", ignore = true)
     Dog dogRequestDTOtoDog(DogRequestDTO dto);
 
+    @Mapping(target = "relativeReference", expression = "java(\"/api/dog/\" + dog.getId())")
     DogResponseDTO dogToDogResponseDTO(Dog dog);
 
     @ValueMapping(target = "MALE", source = "MALE")

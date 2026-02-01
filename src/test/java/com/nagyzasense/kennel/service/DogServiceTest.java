@@ -49,8 +49,8 @@ class DogServiceTest {
         dog.setBreed("dachshund");
         dog.setGender(Gender.FEMALE);
 
-        dogResponseDTO = new DogResponseDTO("Morzsi", "dachshund", Gender.FEMALE, null);
-        dogRequestDTO = new DogRequestDTO("Morzsi", "dachshund", "FEMALE", null);
+        dogResponseDTO = DogResponseDTO.builder().name("Morzsi").breed("dachshund").gender(Gender.FEMALE).build();
+        dogRequestDTO = DogRequestDTO.builder().name("Morzsi").breed("dachshund").gender("FEMALE").build();
 
         ReflectionTestUtils.setField(underTest, "relativePathPrefix", "relativePathPrefix");
     }
@@ -61,10 +61,10 @@ class DogServiceTest {
         when(dogRepositoryMock.findById(1L)).thenReturn(Optional.of(dog));
         when(dogModelMapper.dogToDogResponseDTO(dog)).thenReturn(dogResponseDTO);
 
-        DogResponseDTO expected = new DogResponseDTO();
-        expected.setName("Morzsi");
-        expected.setBreed("dachshund");
-        expected.setGender(Gender.FEMALE);
+        DogResponseDTO expected = DogResponseDTO.builder()
+                .name("Morzsi")
+                .breed("dachshund")
+                .gender(Gender.FEMALE).build();
 
         DogResponseDTO result = underTest.getDogById(1L);
 
@@ -89,10 +89,10 @@ class DogServiceTest {
         when(dogRepositoryMock.findAll()).thenReturn(List.of(dog));
         when(dogModelMapper.dogToDogResponseDTO(dog)).thenReturn(dogResponseDTO);
 
-        DogResponseDTO localDog = new DogResponseDTO();
-        localDog.setName("Morzsi");
-        localDog.setBreed("dachshund");
-        localDog.setGender(Gender.FEMALE);
+        DogResponseDTO localDog = DogResponseDTO.builder()
+                .name("Morzsi")
+                .breed("dachshund")
+                .gender(Gender.FEMALE).build();
         List<DogResponseDTO> expected = List.of(localDog);
 
         List<DogResponseDTO> result = underTest.findAll();
